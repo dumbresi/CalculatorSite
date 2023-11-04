@@ -19,9 +19,10 @@ class Button{
         canvas.setAttribute("width",""+this.#width*2);
         container.appendChild(canvas);
         const ctx= canvas.getContext("2d");
-        ctx.rect(10,this.#startheight,this.#width,this.#height);
+        ctx.rect(1,1,this.#width*1.9,this.#height*1.9);
         ctx.stroke();
         ctx.fillText(text,25,30);
+        ctx.font = "34px Arial";
         ctx.fillStyle=this.#color;
         if(text==="="){
             evaluateButton=canvas;
@@ -32,6 +33,7 @@ class Button{
             if(text==="back"){
                 expression=expression.substring(0,expression.length-1);
                 screen.innerHTML=expression;
+                answer.innerHTML="";
             }
             if(text!="=" && text!="back"){
                 expression+=text;
@@ -71,7 +73,7 @@ let btn_count=0;
 for(let i=0;i<5;i++){
     space=0;
     for(let j=0;j<5;j++){
-        var btn=new Button(10*space,10,40,40,"#9933CC");
+        var btn=new Button(10*space,10,40,40,"white");
         btn.drawButton(buttons[btn_count],containers[i]);
         space++;
         btn_count++;
