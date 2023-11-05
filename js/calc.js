@@ -19,11 +19,14 @@ class Button{
         canvas.setAttribute("width",""+this.#width*2);
         container.appendChild(canvas);
         const ctx= canvas.getContext("2d");
-        ctx.rect(1,1,this.#width*1.9,this.#height*1.9);
+        ctx.fillStyle = this.#color;
         ctx.stroke();
-        ctx.fillText(text,25,30);
-        ctx.font = "34px Arial";
-        ctx.fillStyle=this.#color;
+        ctx.fillRect(0,0,this.#width*2,this.#height*2);
+        
+        ctx.font="30px Arial";
+        ctx.fillStyle = "white"
+        // ctx.fillStyle=this.#color;
+        ctx.fillText(text,25,40);
         if(text==="="){
             evaluateButton=canvas;
         }
@@ -32,12 +35,12 @@ class Button{
 
             if(text==="back"){
                 expression=expression.substring(0,expression.length-1);
-                screen.innerHTML=expression;
-                answer.innerHTML="";
+                screen.textContent=expression;
+                answer.textContent="";
             }
             if(text!="=" && text!="back"){
                 expression+=text;
-                screen.innerHTML=expression;
+                screen.textContent=expression;
             }
             
            
@@ -73,7 +76,13 @@ let btn_count=0;
 for(let i=0;i<5;i++){
     space=0;
     for(let j=0;j<5;j++){
-        var btn=new Button(10*space,10,40,40,"white");
+        var btn_color
+        if(j!=4){
+            btn_color="#444444"
+        }else{
+            btn_color="orange"
+        }
+        var btn=new Button(10*space,10,40,40,btn_color);
         btn.drawButton(buttons[btn_count],containers[i]);
         space++;
         btn_count++;
@@ -82,7 +91,7 @@ for(let i=0;i<5;i++){
 
 evaluateButton.addEventListener("click",()=>{
     // eval(expression);
-    answer.innerHTML=eval(expression);
+    answer.textContent=eval(expression);
 });
 
 

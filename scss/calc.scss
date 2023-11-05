@@ -4,8 +4,8 @@ body{
     background-color: rgb(191, 188, 184);
     
     .calculator{
-        top: 50%;
-        left: 50%;
+        top: 20%;
+        left: 20%;
         position: fixed;
         p{
             background-color: aliceblue;
@@ -14,19 +14,19 @@ body{
             display: flex;
             flex-direction: column;
         }
-        .container-1{
-            background-color: azure;
+        #container-1{
+            // background-color: azure;
         }
-        .container-2{
+        #container-2{
 
         }
-        .container-3{
+        #container-3{
 
         }
-        .container-4{
+        #container-4{
 
         }
-        .container-5{
+        #container-5{
 
         }
     }
