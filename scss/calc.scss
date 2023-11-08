@@ -7,9 +7,24 @@ body{
         top: 20%;
         left: 20%;
         position: fixed;
-        p{
-            background-color: aliceblue;
+        .display{
+            height: 100px;
+            background-color: rgb(82, 82, 82);
+            p{
+                padding-right: 20px;
+                text-align: end;
+                font-size: 20px;
+                font-weight: bold;
+                text-decoration: rgb(255, 255, 255);
+                color: white;
+            }
+            #answer{
+                font-size: 30px;
+            }
         }
+        // p{
+        //     background-color: aliceblue;
+        // }
         .container{
             display: flex;
             flex-direction: column;

@@ -83,7 +83,7 @@ for(let i=0;i<5;i++){
             btn_color="#787a7e"
         }
         else if(i==0 & j<4){
-            btn_color="#4a4f50"
+            btn_color="#5e6066"
         }else{
             btn_color="orange"
         }
