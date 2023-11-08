@@ -151,13 +151,20 @@ function calculate(expression) {
     const output = [];   // Output queue for postfix notation
   const operators = []; // Stack for operators
 
-  for (let token of tokens) {
+  for (let i=0;i<tokens.length;i++) {
+    const token=tokens[i];
     if (!isNaN(token)) {
       // If the token is a number, add it to the output queue
       output.push(token);
     } else if (token === "(") {
       // If it's an opening parenthesis, push it to the operator stack
       operators.push(token);
+      if(tokens[i+1]==="-"&& !isNaN(tokens[i+2])){
+       //If a negative number is present inside () then push that negative number in output stack
+        const neg="-"+tokens[i+2];
+        output.push(neg);
+        i=i+2;
+      }
     } else if (token === ")") {
       // If it's a closing parenthesis, pop operators from the stack to output until an opening parenthesis is encountered
       while (operators.length > 0 && operators[operators.length - 1] !== "(") {
