@@ -21,11 +21,14 @@ class Button{
         const ctx= canvas.getContext("2d");
         ctx.fillStyle = this.#color;
        
-        ctx.fillRect(0,0,this.#width*1.95,this.#height*1.95);
+        ctx.fillRect(0,0,this.#width*1.99,this.#height*2.2);
         ctx.strokeStyle="white";
         ctx.stroke();
         
         ctx.font="30px Arial";
+        if(text==="Back"){
+            ctx.font="20px Arial"
+        }
         ctx.fillStyle = "white"
         // ctx.fillStyle=this.#color;
         ctx.fillText(text,this.#width/1.5,this.#height/0.8);
@@ -35,12 +38,16 @@ class Button{
         canvas.addEventListener("click",(event)=>{
             const target=event.target;
 
-            if(text==="back"){
+            if(text==="Back"){
                 expression=expression.substring(0,expression.length-1);
                 screen.textContent=expression;
                 answer.textContent="";
             }
-            if(text!="=" && text!="back"){
+            if(text==="X"){
+                expression+="*";
+                screen.textContent=expression;
+            }
+            if(text!="=" && text!="Back" && text!="X"){
                 expression+=text;
                 screen.textContent=expression;
             }
@@ -73,7 +80,7 @@ let space=0;
 
 var evaluateButton;
 
-var buttons=["","","","%","/","(","7","8","9","*",")","4","5","6","-","back","1","2","3","+","0",".","="];
+var buttons=["","","","%","/","(","7","8","9","X",")","4","5","6","-","Back","1","2","3","+","0",".","="];
 let btn_count=0;
 for(let i=0;i<5;i++){
     space=0;
