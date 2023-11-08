@@ -20,13 +20,15 @@ class Button{
         container.appendChild(canvas);
         const ctx= canvas.getContext("2d");
         ctx.fillStyle = this.#color;
+       
+        ctx.fillRect(0,0,this.#width*1.95,this.#height*1.95);
+        ctx.strokeStyle="white";
         ctx.stroke();
-        ctx.fillRect(0,0,this.#width*2,this.#height*2);
         
         ctx.font="30px Arial";
         ctx.fillStyle = "white"
         // ctx.fillStyle=this.#color;
-        ctx.fillText(text,25,40);
+        ctx.fillText(text,this.#width/1.5,this.#height/0.8);
         if(text==="="){
             evaluateButton=canvas;
         }
@@ -71,19 +73,25 @@ let space=0;
 
 var evaluateButton;
 
-var buttons=["","","","%","/","(","7","8","9","*",")","4","5","6","-","back","1","2","3","+","","","0",".","="];
+var buttons=["","","","%","/","(","7","8","9","*",")","4","5","6","-","back","1","2","3","+","0",".","="];
 let btn_count=0;
 for(let i=0;i<5;i++){
     space=0;
     for(let j=0;j<5;j++){
         var btn_color
         if(j!=4){
-            btn_color="#444444"
+            btn_color="#4a4f50"
         }else{
             btn_color="orange"
         }
-        var btn=new Button(10*space,10,40,40,btn_color);
-        btn.drawButton(buttons[btn_count],containers[i]);
+        if(buttons[btn_count]==="0"){
+            var btn=new Button(10*space,10,120,40,btn_color);
+            btn.drawButton(buttons[btn_count],containers[i]);
+            j=j+2;
+        }else{
+            var btn=new Button(10*space,10,40,40,btn_color);
+            btn.drawButton(buttons[btn_count],containers[i]);
+        }
         space++;
         btn_count++;
     }
@@ -91,8 +99,109 @@ for(let i=0;i<5;i++){
 
 evaluateButton.addEventListener("click",()=>{
     // eval(expression);
-    answer.textContent=eval(expression);
+    
+    answer.textContent=calculate(expression);
 });
+
+// Function to calculate the result of a mathematical expression
+function calculate(expression) {
+    try {
+      const tokens = tokenize(expression);
+      const postfix = infixToPostfix(tokens);
+      const result = evaluatePostfix(postfix);
+      return result;
+    } catch (error) {
+      return "Error: " + error.message;
+    }
+  }
+
+  function tokenize(expression) {
+    // Tokenize the input expression using regex
+    return expression.match(/\d+\.\d+|\d+|[+\-*/()]|-\d+|\d+/g);
+    // return expression.match(/(\d+\.\d+|\d+|[-+*/()])/g);
+  }
+  
+  function infixToPostfix(tokens) {
+    // Operator precedence
+    console.log(tokens);
+    const precedence = {
+      "+": 1,
+      "-": 1,
+      "*": 2,
+      "/": 2,
+    };
+
+    const output = [];   // Output queue for postfix notation
+  const operators = []; // Stack for operators
+
+  for (let token of tokens) {
+    if (!isNaN(token)) {
+      // If the token is a number, add it to the output queue
+      output.push(token);
+    } else if (token === "(") {
+      // If it's an opening parenthesis, push it to the operator stack
+      operators.push(token);
+    } else if (token === ")") {
+      // If it's a closing parenthesis, pop operators from the stack to output until an opening parenthesis is encountered
+      while (operators.length > 0 && operators[operators.length - 1] !== "(") {
+        output.push(operators.pop());
+      }
+      if (operators[operators.length - 1] === "(") {
+        operators.pop(); // Discard the opening parenthesis
+      }
+    } else {
+      // If it's an operator, handle operator precedence and push to the stack accordingly
+      while (operators.length > 0 && precedence[operators[operators.length - 1]] >= precedence[token]) {
+        output.push(operators.pop());
+      }
+      operators.push(token);
+    }
+  }
+
+  // Pop any remaining operators from the stack to the output queue
+  while (operators.length > 0) {
+    output.push(operators.pop());
+  }
+
+  return output; // Return the postfix notation
+}
+
+// Function to evaluate a postfix expression
+function evaluatePostfix(tokens) {
+    const stack = [];
+  
+    for (let token of tokens) {
+      if (!isNaN(token)) {
+        // If it's a number, push it to the stack
+        stack.push(parseFloat(token));
+      } else {
+        // If it's an operator, pop two operands from the stack, perform the operation, and push the result back to the stack
+        const b = stack.pop();
+        const a = stack.pop();
+        switch (token) {
+          case "+":
+            stack.push(a + b);
+            break;
+          case "-":
+            stack.push(a - b);
+            break;
+          case "*":
+            stack.push(a * b);
+            break;
+          case "/":
+            stack.push(a / b);
+            break;
+        }
+      }
+    }
+  
+    if (stack.length === 1) {
+      // If there's a single value in the stack, that's the result
+      return stack[0];
+    } else {
+      throw new Error("Invalid expression");
+    }
+  }
 
 
 // for(let i=0;i<5;i++){
