@@ -79,7 +79,10 @@ for(let i=0;i<5;i++){
     space=0;
     for(let j=0;j<5;j++){
         var btn_color
-        if(j!=4){
+        if(j!=4 && i>0){
+            btn_color="#787a7e"
+        }
+        else if(i==0 & j<4){
             btn_color="#4a4f50"
         }else{
             btn_color="orange"
