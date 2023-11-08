@@ -43,11 +43,18 @@ class Button{
                 screen.textContent=expression;
                 answer.textContent="";
             }
-            if(text==="X"){
+            else if(text==="X"){
                 expression+="*";
                 screen.textContent=expression;
             }
-            if(text!="=" && text!="Back" && text!="X"){
+            else if(text==="C"){
+                expression="";
+                screen.textContent="";
+                answer.textContent=""
+            } else if(text==="="){
+                screen.textContent=expression;
+            }
+            else{
                 expression+=text;
                 screen.textContent=expression;
             }
@@ -80,7 +87,7 @@ let space=0;
 
 var evaluateButton;
 
-var buttons=["","","","%","/","(","7","8","9","X",")","4","5","6","-","Back","1","2","3","+","0",".","="];
+var buttons=["C","","","%","/","(","7","8","9","X",")","4","5","6","-","Back","1","2","3","+","0",".","="];
 let btn_count=0;
 for(let i=0;i<5;i++){
     space=0;
@@ -167,7 +174,8 @@ function calculate(expression) {
       operators.push(token);
     }
   }
-
+  console.log("operator:"+operators);
+  console.log("output:"+output);
   // Pop any remaining operators from the stack to the output queue
   while (operators.length > 0) {
     output.push(operators.pop());
