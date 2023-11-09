@@ -158,7 +158,8 @@ function calculate(expression) {
 
   function tokenize(expression) {
     // Tokenize the input expression using regex
-    return expression.match(/\d+\.\d+|\d+|[+\-*/()]|-\d+|\d+/g);
+    return expression.match(/\d+\.\d+|\d+|[+\-*/%()]|-\d+|\d+/g);
+    // return expression.match(/\d+\.\d+|\d+|[+\-*/()]|-\d+|\d+/g);
     // return expression.match(/(\d+\.\d+|\d+|[-+*/()])/g);
   }
   
@@ -190,6 +191,14 @@ function calculate(expression) {
         output.push(neg);
         i=i+2;
       }
+    }else if (token === "%") {
+        // Handle the '%' operator by dividing the previous number by 100
+        const operand = tokens[i-1];
+        console.log("operand:"+operand);
+        const no=operand/100;
+        console.log("no"+no);
+        output.pop();
+        output.push(no);
     } else if (token === ")") {
       // If it's a closing parenthesis, pop operators from the stack to output until an opening parenthesis is encountered
       while (operationsStack.length > 0 && operationsStack[operationsStack.length - 1] !== "(") {
