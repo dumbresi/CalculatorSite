@@ -255,6 +255,30 @@ function evaluatePostfix(tokens) {
     }
   }
 
+const btn_holder= document.querySelector(".buttons");
+
+for(let i=0;i<3;i++){
+    const canvas=document.createElement("canvas");
+    canvas.setAttribute("height",""+20);
+    canvas.setAttribute("width",""+20);
+    canvas.style.marginTop = "5px";
+    canvas.style.marginLeft = "10px";
+    btn_holder.appendChild(canvas);
+    const cvs= canvas.getContext("2d");
+    cvs.arc(10, 10, 10, 0, 2 * Math.PI, false);
+    if(i===0){
+        cvs.fillStyle = 'red';
+    }else if(i===1){
+        cvs.fillStyle = '#d4c555';
+    }else{
+        cvs.fillStyle = 'green';
+    }
+    
+    cvs.fill();
+
+}
+
+
 
 // for(let i=0;i<5;i++){
 //     const a= new Button(10*i,10,40,40,'#9933CC');

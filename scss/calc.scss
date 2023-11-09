@@ -10,15 +10,21 @@ body{
         background-color: black;
         border-radius: 10px;
         width: 401px;
-        height: 544px;
+        height: 564px;
         position: relative;
         .display{
             background-color: rgb(82, 82, 82);
-            height: 120px;
+            height: 140px;
             margin-top: 0px;
             width: 400px;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
+            .buttons{
+                height: 20px;
+                display: flex;
+                justify-content: start;
+                flex-direction: row;
+            }
             p{
                 padding-right: 20px;
                 text-align: end;
