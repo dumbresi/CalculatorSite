@@ -29,10 +29,15 @@ class Button{
         ctx.font="30px Arial";
         if(text==="Back"){
             ctx.font="20px Arial"
+            ctx.fillStyle = "white"
+            ctx.fillText(text,this.#width/2.5,this.#height/0.8);
+        }else{
+            ctx.fillStyle = "white"
+            ctx.fillText(text,this.#width/1.5,this.#height/0.8);
         }
-        ctx.fillStyle = "white"
+        
         // ctx.fillStyle=this.#color;
-        ctx.fillText(text,this.#width/1.5,this.#height/0.8);
+        
         if(text==="="){
             evaluateButton=canvas;
         }
