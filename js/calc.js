@@ -20,6 +20,7 @@ class Button{
         container.appendChild(canvas);
         const ctx= canvas.getContext("2d");
         ctx.fillStyle = this.#color;
+        //draw the buttons using the height width and color provided
        
         ctx.fillRect(0,0,this.#width*1.99,this.#height*2.2);
         ctx.strokeStyle="white";
@@ -39,6 +40,7 @@ class Button{
             const target=event.target;
 
             if(text==="Back"){
+                //if back button is pressed, delete the last character, also erase the answer
                 expression=expression.substring(0,expression.length-1);
                 screen.textContent=expression;
                 answer.textContent="";
@@ -48,13 +50,16 @@ class Button{
                 screen.textContent=expression;
             }
             else if(text==="C"){
+                //clear screen once C is clicked
                 expression="";
                 screen.textContent="";
                 answer.textContent=""
             } else if(text==="="){
+                //evaluate the expression keeping the expression as it is
                 screen.textContent=expression;
             }
             else{
+                //update the expression depending on the button pressed and update the display text
                 expression+=text;
                 screen.textContent=expression;
             }
@@ -86,28 +91,36 @@ var expression="";
 let space=0;
 
 var evaluateButton;
-
+//defined buttons array for all the buttons
 var buttons=["C","","","%","/","(","7","8","9","X",")","4","5","6","-","Back","1","2","3","+","0",".","="];
+
 let btn_count=0;
 for(let i=0;i<5;i++){
+    //iterate through rows
     space=0;
     for(let j=0;j<5;j++){
         var btn_color
+        //iterate over every button
         if(j!=4 && i>0){
             btn_color="#787a7e"
+            //button color for central buttons
         }
         else if(i==0 & j<4){
             btn_color="#5e6066"
+        //button color for first row buttons
         }else{
             btn_color="orange"
+            //button colors for 5th column
         }
         if(buttons[btn_count]==="0"){
             var btn=new Button(10*space,10,120,40,btn_color);
             btn.drawButton(buttons[btn_count],containers[i]);
             j=j+2;
+            //stretch the 0 character button
         }else{
             var btn=new Button(10*space,10,40,40,btn_color);
             btn.drawButton(buttons[btn_count],containers[i]);
+            //draw the buttons by calculating the width
         }
         space++;
         btn_count++;
@@ -141,6 +154,7 @@ function calculate(expression) {
   function infixToPostfix(tokens) {
     // Operator precedence
     console.log(tokens);
+    //multiplication and divison are given first priority then add, subtract
     const precedence = {
       "+": 1,
       "-": 1,
@@ -149,7 +163,7 @@ function calculate(expression) {
     };
 
     const output = [];   // Output queue for postfix notation
-  const operators = []; // Stack for operators
+  const operationsStack = []; // Stack for operators
 
   for (let i=0;i<tokens.length;i++) {
     const token=tokens[i];
@@ -158,7 +172,7 @@ function calculate(expression) {
       output.push(token);
     } else if (token === "(") {
       // If it's an opening parenthesis, push it to the operator stack
-      operators.push(token);
+      operationsStack.push(token);
       if(tokens[i+1]==="-"&& !isNaN(tokens[i+2])){
        //If a negative number is present inside () then push that negative number in output stack
         const neg="-"+tokens[i+2];
@@ -167,25 +181,25 @@ function calculate(expression) {
       }
     } else if (token === ")") {
       // If it's a closing parenthesis, pop operators from the stack to output until an opening parenthesis is encountered
-      while (operators.length > 0 && operators[operators.length - 1] !== "(") {
-        output.push(operators.pop());
+      while (operationsStack.length > 0 && operationsStack[operationsStack.length - 1] !== "(") {
+        output.push(operationsStack.pop());
       }
-      if (operators[operators.length - 1] === "(") {
-        operators.pop(); // Discard the opening parenthesis
+      if (operationsStack[operationsStack.length - 1] === "(") {
+        operationsStack.pop(); // Discard the opening parenthesis
       }
     } else {
       // If it's an operator, handle operator precedence and push to the stack accordingly
-      while (operators.length > 0 && precedence[operators[operators.length - 1]] >= precedence[token]) {
-        output.push(operators.pop());
+      while (operationsStack.length > 0 && precedence[operationsStack[operationsStack.length - 1]] >= precedence[token]) {
+        output.push(operationsStack.pop());
       }
-      operators.push(token);
+      operationsStack.push(token);
     }
   }
-  console.log("operator:"+operators);
+  console.log("operator:"+operationsStack);
   console.log("output:"+output);
   // Pop any remaining operators from the stack to the output queue
-  while (operators.length > 0) {
-    output.push(operators.pop());
+  while (operationsStack.length > 0) {
+    output.push(operationsStack.pop());
   }
 
   return output; // Return the postfix notation
