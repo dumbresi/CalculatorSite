@@ -63,6 +63,9 @@ class Button{
                 expression+=text;
                 screen.textContent=expression;
             }
+            if(text!="="){
+                answer.textContent="";
+            }
             
            
         });
@@ -236,7 +239,12 @@ function evaluatePostfix(tokens) {
   
     if (stack.length === 1) {
       // If there's a single value in the stack, that's the result
-      return stack[0];
+      if(!isNaN(stack[0])){
+        return stack[0];
+      }else{
+        return "Invalid Expression";
+      }
+      
     } else {
       throw new Error("Invalid expression");
     }
