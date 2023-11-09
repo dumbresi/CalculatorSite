@@ -6,12 +6,16 @@ body{
     .calculator{
         top: 20%;
         left: 20%;
-        position: fixed;
+        // position: fixed;
         background-color: black;
         border-radius: 10px;
+        height: 520px;
+        width: 400px;
         .display{
             height: auto;
             background-color: rgb(82, 82, 82);
+            padding: 0px;
+            height: 100px;
             p{
                 padding-right: 20px;
                 text-align: end;
@@ -19,7 +23,7 @@ body{
                 font-weight: bold;
                 text-decoration: rgb(255, 255, 255);
                 color: white;
-                min-height: 20px;
+                // min-height: 30px;
             }
             #screen{
                 padding-top: 5px;
