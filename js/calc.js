@@ -191,15 +191,22 @@ function calculate(expression) {
         output.push(neg);
         i=i+2;
       }
-    }else if (token === "%") {
+    }
+    else if (token === "%") {
         // Handle the '%' operator by dividing the previous number by 100
-        const operand = tokens[i-1];
-        console.log("operand:"+operand);
-        const no=operand/100;
-        console.log("no"+no);
-        output.pop();
-        output.push(no);
-    } else if (token === ")") {
+        // const operand = tokens[i-1];
+        // console.log("operand:"+operand);
+        // const no=operand/100;
+        // console.log("no"+no);
+        // output.pop();
+        // output.push(no);
+        const a = output.pop();
+        const b = tokens[i+1];
+        i++;
+        output.push(a % b);
+
+    } 
+    else if (token === ")") {
       // If it's a closing parenthesis, pop operators from the stack to output until an opening parenthesis is encountered
       while (operationsStack.length > 0 && operationsStack[operationsStack.length - 1] !== "(") {
         output.push(operationsStack.pop());
