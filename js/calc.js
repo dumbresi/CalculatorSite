@@ -31,6 +31,9 @@ class Button{
             ctx.font="20px Arial"
             ctx.fillStyle = "white"
             ctx.fillText(text,this.#width/2.5,this.#height/0.8);
+        }else if(text==="0"){
+            ctx.fillStyle = "white"
+            ctx.fillText(text,this.#width,this.#height/0.8);
         }else{
             ctx.fillStyle = "white"
             ctx.fillText(text,this.#width/1.5,this.#height/0.8);
